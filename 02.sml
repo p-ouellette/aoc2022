@@ -1,8 +1,8 @@
-val readLines = (String.tokens (fn c => c = #"\n")) o TextIO.inputAll
-fun readInput f = IOUtil.withInputFile (f, readLines) TextIO.stdIn
-val input = readInput "02.in"
+use "advent-prelude.sml";
 
-val scoreRound =
+val input = withInputFile ("02.in", readLines)
+
+val score =
   fn "A X" => 4
    | "A Y" => 8
    | "A Z" => 3
@@ -13,9 +13,9 @@ val scoreRound =
    | "C Y" => 2
    | "C Z" => 6
 
-val part1 = (foldl op + 0) o (map scoreRound)
+val part1 = sum o (map score)
 
-val scoreRound' =
+val score' =
   fn "A X" => 3
    | "A Y" => 4
    | "A Z" => 8
@@ -26,7 +26,7 @@ val scoreRound' =
    | "C Y" => 6
    | "C Z" => 7
 
-val part2 = (foldl op + 0) o (map scoreRound')
+val part2 = sum o (map score')
 
 val _ = print (Int.toString (part1 input) ^ "\n")
 val _ = print (Int.toString (part2 input) ^ "\n")

@@ -1,32 +1,12 @@
-val readLines = (String.tokens (fn c => c = #"\n")) o TextIO.inputAll
-fun parsePair line =
-  let
-    val parseRange =
-      (map (valOf o Int.fromString)) o (String.fields (fn c => c = #"-"))
-    val pair = String.fields (fn c => c = #",") line
-    val (a :: b :: _) :: (x :: y :: _) :: _ = map parseRange pair
-  in
-    ((a, b), (x, y))
-  end
-val parseInput = (map parsePair) o readLines
-fun readInput f = IOUtil.withInputFile (f, parseInput) TextIO.stdIn
-val input = readInput "04.in"
+use "advent-prelude.sml";
 
-fun cont ((a, b), c) = c >= a andalso c <= b
-fun contRange (a, (x, y)) = cont (a, x) andalso cont (a, y)
+val parseInput = (map ints) o readLines
+val input = withInputFile ("04.in", parseInput)
 
 val part1 =
-  foldl
-    (fn ((a, b), n) =>
-       if contRange (a, b) orelse contRange (b, a) then
-         n + 1
-       else
-         n)
-    0
+  count (fn [a, b, c, d] => a >= c andalso b <= d orelse c >= a andalso d <= b)
 
-fun overlap ((a, b), (x, y)) = cont ((a, b), x) orelse cont ((x, y), a)
-
-val part2 = foldl (fn ((a, b), n) => if overlap (a, b) then n + 1 else n) 0
+val part2 = count (fn [a, b, c, d] => not (c > b orelse a > d))
 
 val _ = print (Int.toString (part1 input) ^ "\n")
 val _ = print (Int.toString (part2 input) ^ "\n")

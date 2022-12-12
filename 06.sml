@@ -1,19 +1,11 @@
-structure Set = IntListSet
+use "advent-prelude.sml";
 
-val parseInput = explode o TextIO.inputAll
-fun readInput f = IOUtil.withInputFile (f, parseInput) TextIO.stdIn
-val input = readInput "06.in"
+val parseInput = (map ord) o explode o TIO.inputAll
+val input = withInputFile ("06.in", parseInput)
 
 fun firstMarker (buf, len) =
-  let
-    fun loop (buf, i) =
-      if Set.numItems (Set.fromList (map ord (List.take (buf, len)))) = len then
-        i
-      else
-        loop (tl buf, i + 1)
-  in
-    loop (buf, len)
-  end
+  len + locate (fn l => Set.numItems (Set.fromList (take len l)) = len)
+    (window len buf)
 
 fun part1 buf = firstMarker (buf, 4)
 fun part2 buf = firstMarker (buf, 14)
