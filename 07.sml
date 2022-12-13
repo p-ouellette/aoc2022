@@ -37,7 +37,7 @@ val part1 = sum o (filter (fn n => n <= 100000)) o dirSizes
 
 fun part2 root =
   let val minsz = 30000000 - (70000000 - size root) in
-    reduce Int.min ~1 (filter (fn n => n >= minsz) (dirSizes root))
+    min (filter (fn n => n >= minsz) (dirSizes root))
   end
 
 val _ = print (Int.toString (part1 root) ^ "\n")
