@@ -17,7 +17,7 @@ val parseInput = (map ints) o (drop 10) o readLines
 val input = withInputFile ("05.in", parseInput)
 
 fun moveCrates put ([cnt, src, dst], stacks) =
-  mapNth (dst - 1, fn l => put (take cnt (nth (src - 1) stacks), l))
+  mapNth (dst - 1, fn l => put (take cnt (List.nth (stacks, src - 1)), l))
     (mapNth (src - 1, drop cnt) stacks)
 
 val part1 = implode o (map hd) o (foldl (moveCrates List.revAppend) initStacks)

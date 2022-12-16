@@ -4,6 +4,8 @@ use "string-util.sml";
 structure Set = IntListSet
 structure Sort = ListMergeSort
 structure TIO = TextIO
+structure V = Vector
+structure VS = VectorSlice
 
 open ListUtil
 open StringUtil
@@ -13,7 +15,6 @@ fun min (x :: xs) = foldl Int.min x xs
 fun max (x :: xs) = foldl Int.max x xs
 val reduce = List.reduce
 val filter = List.filter
-fun nth n l = List.nth (l, n)
 fun take n l = List.take (l, n)
 fun drop n l = List.drop (l, n)
 
