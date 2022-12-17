@@ -1,11 +1,18 @@
 use "list-util.sml";
 use "string-util.sml";
+use "int-vector2.sml";
 
-structure Set = IntListSet
+structure Set = IntRedBlackSet
 structure Sort = ListMergeSort
 structure TIO = TextIO
 structure V = Vector
 structure VS = VectorSlice
+
+structure V2 = IntVector2
+structure V2Set =
+  RedBlackSetFn
+    (type ord_key = V2.vec
+     val compare = V2.collate Int.compare)
 
 open ListUtil
 open StringUtil

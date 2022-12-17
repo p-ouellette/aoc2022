@@ -3,13 +3,13 @@ use "advent-prelude.sml";
 val parseInput = V.fromList o (map (V.fromList o digits)) o readLines
 val hmap = withInputFile ("08.in", parseInput)
 
+fun vsub i v = V.sub (v, i)
+fun vsub2 (v, (x, y)) = V.sub (V.sub (v, x), y)
+
 fun coords hmap =
   List.concatMap
     (fn r => List.tabulate (V.length (V.sub (hmap, 0)), fn c => (r, c)))
     (List.tabulate (V.length hmap, Fn.id))
-
-fun vsub i v = V.sub (v, i)
-fun vsub2 (v, (x, y)) = V.sub (V.sub (v, x), y)
 
 fun lines hmap (x, y) =
   [ VS.slice (vsub x hmap, 0, SOME y)
