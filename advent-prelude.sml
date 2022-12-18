@@ -25,7 +25,12 @@ val filter = List.filter
 fun take n l = List.take (l, n)
 fun drop n l = List.drop (l, n)
 
-val ints = (map (valOf o Int.fromString)) o (String.tokens (not o Char.isDigit))
+local
+  fun intToks f = (map (valOf o Int.fromString)) o (String.tokens f)
+in
+  val ints = intToks (not o Char.isDigit)
+  val signedInts = intToks (fn c => not (Char.isDigit c orelse c = #"-"))
+end
 
 val digits = (map (fn c => ord c - ord #"0")) o explode
 
