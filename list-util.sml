@@ -41,7 +41,7 @@ structure ListUtil :> LIST_UTIL =
 
     fun split f l =
       let
-        fun sp ([], acc, ls) = rev (acc :: ls)
+        fun sp ([], acc, ls) = rev (rev acc :: ls)
           | sp (x :: xs, acc, ls) =
             if f x then
               sp (xs, [], rev acc :: ls)
