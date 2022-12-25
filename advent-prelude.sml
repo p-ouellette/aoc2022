@@ -1,6 +1,8 @@
 use "list-util.sml";
 use "string-util.sml";
 use "int-vector2.sml";
+use "coord.sml";
+use "grid.sml";
 
 structure Set = IntRedBlackSet
 structure Sort = ListMergeSort

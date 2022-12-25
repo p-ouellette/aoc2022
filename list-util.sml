@@ -10,15 +10,12 @@ signature LIST_UTIL =
 
 structure ListUtil :> LIST_UTIL =
   struct
-    fun count f l = length (List.filter f l)
+    fun count f l = foldl (fn (x, n) => if f x then n + 1 else n) 0 l
 
     fun locate f l =
-      let
-        fun lp (_, []) = ~1
-          | lp (i, x :: xs) = if f x then i else lp (i + 1, xs)
-      in
-        lp (0, l)
-      end
+      case List.findi (f o # 2) l of
+        NONE => raise Fail "no matching element"
+      | SOME (i, _) => i
 
     fun group n l =
       let

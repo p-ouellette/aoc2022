@@ -1,42 +1,31 @@
 use "advent-prelude.sml";
 
-val parseInput = V.fromList o (map (V.fromList o digits)) o readLines
+val parseInput = Grid.fromList o (map digits) o readLines
 val hmap = withInputFile ("08.in", parseInput)
 
-fun vsub i v = V.sub (v, i)
-fun vsub2 (v, (x, y)) = V.sub (V.sub (v, x), y)
-
-fun coords hmap =
-  List.concatMap
-    (fn r => List.tabulate (V.length (V.sub (hmap, 0)), fn c => (r, c)))
-    (List.tabulate (V.length hmap, Fn.id))
-
-fun lines hmap (x, y) =
-  [ VS.slice (vsub x hmap, 0, SOME y)
-  , VS.slice (V.map (vsub y) hmap, 0, SOME x)
-  , VS.slice (vsub x hmap, y + 1, NONE)
-  , VS.slice (V.map (vsub y) hmap, x + 1, NONE)
+fun lines g (x, y) =
+  [ VS.slice (Grid.row (g, x), 0, SOME y)
+  , VS.slice (Grid.col (g, y), 0, SOME x)
+  , VS.slice (Grid.row (g, x), y + 1, NONE)
+  , VS.slice (Grid.col (g, y), x + 1, NONE)
   ]
 
-fun visible hmap pos =
-  let val height = vsub2 (hmap, pos) in
-    List.exists (VS.all (fn h => h < height)) (lines hmap pos)
-  end
+fun visible (g, p, h) = List.exists (VS.all (fn h' => h' < h)) (lines g p)
 
-fun part1 hmap = count (visible hmap) (coords hmap)
+fun part1 g =
+  Grid.foldi (fn (p, h, n) => if visible (g, p, h) then n + 1 else n) 0 g
 
-fun score hmap pos =
+fun score (g, p, h) =
   let
-    val height = vsub2 (hmap, pos)
-    fun look1 (h, d) = if h < height then d + 1 else 1
+    fun look1 (h', d) = if h' < h then d + 1 else 1
     val lookl = VS.foldr look1 0
     val lookr = VS.foldl look1 0
-    val [lt, top, rt, bot] = lines hmap pos
+    val [lt, top, rt, bot] = lines g p
   in
     foldl op * 1 [lookr lt, lookr top, lookl rt, lookl bot]
   end
 
-fun part2 hmap = max (map (score hmap) (coords hmap))
+fun part2 g = Grid.foldi (fn (p, h, s) => Int.max (s, score (g, p, h))) 0 g
 
 val _ = print (Int.toString (part1 hmap) ^ "\n")
 val _ = print (Int.toString (part2 hmap) ^ "\n")

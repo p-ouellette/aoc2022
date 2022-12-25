@@ -3,10 +3,10 @@ use "advent-prelude.sml";
 val parseInput = (map (fn s => (String.sub (s, 0), hd (ints s)))) o readLines
 val moves = withInputFile ("09.in", parseInput)
 
-fun stepH #"L" (x, y) = (x - 1, y)
-  | stepH #"U" (x, y) = (x, y + 1)
-  | stepH #"R" (x, y) = (x + 1, y)
-  | stepH #"D" (x, y) = (x, y - 1)
+fun move #"L" = Coord.left
+  | move #"U" = Coord.up
+  | move #"R" = Coord.right
+  | move #"D" = Coord.down
 
 fun stepT (t, h) =
   let val d as (dx, dy) = V2.sub (t, h) in
@@ -14,7 +14,7 @@ fun stepT (t, h) =
   end
 
 fun step dir (h :: ts, visited) =
-  let val r = foldl (fn (t, r) => stepT (t, hd r) :: r) [stepH dir h] ts in
+  let val r = foldl (fn (t, r) => stepT (t, hd r) :: r) [move dir h] ts in
     (rev r, V2Set.add (visited, hd r))
   end
 
