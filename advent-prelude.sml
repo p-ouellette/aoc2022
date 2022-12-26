@@ -13,7 +13,7 @@ structure VS = VectorSlice
 structure V2 = IntVector2
 structure V2Set =
   RedBlackSetFn
-    (type ord_key = V2.vec
+    (type ord_key = V2.t
      val compare = V2.collate Int.compare)
 
 open ListUtil

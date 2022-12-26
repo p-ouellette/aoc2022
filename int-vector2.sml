@@ -1,22 +1,22 @@
 signature VECTOR2 =
   sig
     type elem
-    type vec = elem * elem
+    type t = elem * elem
 
-    val zero : vec
+    val zero : t
 
-    val add : vec * vec -> vec
-    val sub : vec * vec -> vec
+    val add : t * t -> t
+    val sub : t * t -> t
 
-    val map : (elem -> elem) -> vec -> vec
+    val map : (elem -> elem) -> t -> t
 
-    val collate : (elem * elem -> order) -> vec * vec -> order
+    val collate : (elem * elem -> order) -> t * t -> order
   end
 
 structure IntVector2 :> VECTOR2 where type elem = int =
   struct
     type elem = int
-    type vec = int * int
+    type t = int * int
 
     val zero = (0, 0)
 
