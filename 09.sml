@@ -9,20 +9,20 @@ fun move #"L" = Coord.left
   | move #"D" = Coord.down
 
 fun stepT (t, h) =
-  let val d as (dx, dy) = V2.sub (t, h) in
-    if abs dx > 1 orelse abs dy > 1 then V2.sub (t, V2.map Int.sign d) else t
+  let val d as (dx, dy) = V2.sub (t, h)
+  in if abs dx > 1 orelse abs dy > 1 then V2.sub (t, V2.map Int.sign d) else t
   end
 
 fun step dir (h :: ts, visited) =
-  let val r = foldl (fn (t, r) => stepT (t, hd r) :: r) [move dir h] ts in
-    (rev r, V2Set.add (visited, hd r))
+  let val r = foldl (fn (t, r) => stepT (t, hd r) :: r) [move dir h] ts
+  in (rev r, V2Set.add (visited, hd r))
   end
 
 fun simulate ((dir, cnt), acc) = Fn.repeat cnt (step dir) acc
 
 fun countTailPos len =
-  let val r = List.tabulate (len, Fn.const V2.zero) in
-    V2Set.numItems o # 2 o (foldl simulate (r, V2Set.empty))
+  let val r = List.tabulate (len, Fn.const V2.zero)
+  in V2Set.numItems o #2 o (foldl simulate (r, V2Set.empty))
   end
 
 val part1 = countTailPos 2

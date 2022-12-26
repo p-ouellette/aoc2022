@@ -21,7 +21,7 @@ fun moveCrates put ([cnt, src, dst], stacks) =
     (mapNth (src - 1, drop cnt) stacks)
 
 val part1 = implode o (map hd) o (foldl (moveCrates List.revAppend) initStacks)
-val part2 = implode o (map hd) o (foldl (moveCrates op @) initStacks)
+val part2 = implode o (map hd) o (foldl (moveCrates op@) initStacks)
 
 val _ = print (part1 input ^ "\n")
 val _ = print (part2 input ^ "\n")

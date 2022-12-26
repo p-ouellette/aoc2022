@@ -22,7 +22,7 @@ fun score (g, p, h) =
     val lookr = VS.foldl look1 0
     val [lt, top, rt, bot] = lines g p
   in
-    foldl op * 1 [lookr lt, lookr top, lookl rt, lookl bot]
+    foldl op* 1 [lookr lt, lookr top, lookl rt, lookl bot]
   end
 
 fun part2 g = Grid.foldi (fn (p, h, s) => Int.max (s, score (g, p, h))) 0 g

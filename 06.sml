@@ -4,7 +4,9 @@ val parseInput = (map ord) o explode o TIO.inputAll
 val input = withInputFile ("06.in", parseInput)
 
 fun firstMarker (buf, len) =
-  len + locate (fn l => Set.numItems (Set.fromList (take len l)) = len)
+  len
+  +
+  locate (fn l => Set.numItems (Set.fromList (take len l)) = len)
     (window len buf)
 
 fun part1 buf = firstMarker (buf, 4)
