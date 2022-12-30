@@ -4,6 +4,9 @@ use "int-vector2.sml";
 use "coord.sml";
 use "grid.sml";
 
+structure P = ParserComb
+structure LU = ListUtil
+structure SU = StringUtil
 structure Set = IntRedBlackSet
 structure Sort = ListMergeSort
 structure TIO = TextIO
@@ -15,7 +18,6 @@ structure V2Set =
   RedBlackSetFn (type ord_key = V2.t val compare = V2.collate Int.compare)
 
 open ListUtil
-open StringUtil
 
 val sum = foldl op+ 0
 fun min (x :: xs) = foldl Int.min x xs

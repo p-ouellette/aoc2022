@@ -14,10 +14,10 @@ fun parseMonkey [m, items, op', test, ift, iff] =
     }
   )
 
-val input =
-  let val l = withInputFile ("11.in", readLines)
-  in ListPair.unzip (map parseMonkey (ListUtil.split (Fn.equal "") l))
-  end
+val parseInput =
+  ListPair.unzip o (map parseMonkey) o (LU.split (Fn.equal "")) o readLines
+
+val input = withInputFile ("11.in", parseInput)
 
 fun solve part (items, monkeys) =
   let

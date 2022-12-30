@@ -1,6 +1,6 @@
 use "advent-prelude.sml";
 
-val parseInput = (map ints) o (split "\n\n") o TIO.inputAll
+val parseInput = (map ints) o (SU.split "\n\n") o TIO.inputAll
 val input = withInputFile ("01.in", parseInput)
 
 val part1 = max o (map sum)

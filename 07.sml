@@ -17,7 +17,7 @@ fun makeTree lists =
 
 val parseInput =
   makeTree o (map (map ((fn [] => ~1 | [n] => n) o ints)))
-  o (filter (not o null)) o (ListUtil.split (String.isPrefix "$")) o readLines
+  o (filter (not o null)) o (LU.split (String.isPrefix "$")) o readLines
 
 val root = withInputFile ("07.in", parseInput)
 
